@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificación de la Inteligencia Artificial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #2d3748;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .main-branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .branch {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .branch:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .branch.levels {
+            border-color: #4299e1;
+        }
+
+        .branch.functioning {
+            border-color: #48bb78;
+        }
+
+        .branch-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .levels .branch-title {
+            background: linear-gradient(45deg, #4299e1, #63b3ed);
+        }
+
+        .functioning .branch-title {
+            background: linear-gradient(45deg, #48bb78, #68d391);
+        }
+
+        .ai-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid transparent;
+        }
+
+        .ai-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .levels .ai-card {
+            border-left-color: #4299e1;
+        }
+
+        .functioning .ai-card {
+            border-left-color: #48bb78;
+        }
+
+        .ai-card.ani { border-left-color: #ed8936; }
+        .ai-card.agi { border-left-color: #d69e2e; }
+        .ai-card.asi { border-left-color: #e53e3e; }
+
+        .ai-card.reactive { border-left-color: #9f7aea; }
+        .ai-card.limited { border-left-color: #4299e1; }
+        .ai-card.theory { border-left-color: #38b2ac; }
+        .ai-card.aware { border-left-color: #e53e3e; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .card-subtitle {
+            font-size: 0.9em;
+            color: #718096;
+            margin-left: 5px;
+        }
+
+        .card-description {
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .examples {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .examples-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .example-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .example-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        .status-current { background: #48bb78; }
+        .status-future { background: #ed8936; }
+        .status-hypothetical { background: #9f7aea; }
+
+        @media (max-width: 768px) {
+            .main-branches {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #718096;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Clasificación de la Inteligencia Artificial</h1>
+            <p>Mapa conceptual de tipos y niveles de IA con ejemplos del mundo real</p>
+        </div>
+
+        <div class="main-branches">
+            <!-- NIVELES DE IA -->
+            <div class="branch levels">
+                <div class="branch-title">
+                    🎯 NIVELES DE IA
+                    <div style="font-size: 0.6em; font-weight: normal; margin-top: 5px;">Por Capacidad Intelectual</div>
+                </div>
+
+                <div class="ai-card ani">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <div>
+                            <div class="card-title">ANI - Narrow Intelligence</div>
+                            <div class="card-subtitle">Inteligencia Especializada <span class="status-indicator status-current"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Sistemas que imitan aspectos específicos de la inteligencia humana. Dominan tareas concretas pero no pueden generalizar.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">✅ Ejemplos Actuales:</div>
+                        <div class="example-list">
+                            <span class="example-tag">Siri/Alexa</span>
+                            <span class="example-tag">Netflix</span>
+                            <span class="example-tag">Google Translate</span>
+                            <span class="example-tag">Tesla Autopilot</span>
+                            <span class="example-tag">Reconocimiento facial</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-card agi">
+                    <div class="card-header">
+                        <div class="card-icon">🧠</div>
+                        <div>
+                            <div class="card-title">AGI - General Intelligence</div>
+                            <div class="card-subtitle">Inteligencia General <span class="status-indicator status-future"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Sistemas con amplitud de aplicabilidad comparable a los humanos. Pueden realizar cualquier tarea intelectual humana.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">🔮 Ejemplos Futuros:</div>
+                        <div class="example-list">
+                            <span class="example-tag">Asistente Universal</span>
+                            <span class="example-tag">Robot Doméstico Completo</span>
+                            <span class="example-tag">Científico Artificial</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-card asi">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <div>
+                            <div class="card-title">ASI - Superintelligence</div>
+                            <div class="card-subtitle">Superinteligencia <span class="status-indicator status-hypothetical"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Sistemas sustancialmente superiores a la inteligencia humana. Capacidad de tomar decisiones considerando información y proyecciones imposibles para humanos.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">🌟 Ejemplos Hipotéticos:</div>
+                        <div class="example-list">
+                            <span class="example-tag">Gestor Planetario</span>
+                            <span class="example-tag">Investigador Supremo</span>
+                            <span class="example-tag">Estratega Universal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLASIFICACIÓN POR FUNCIONAMIENTO -->
+            <div class="branch functioning">
+                <div class="branch-title">
+                    ⚙️ CLASIFICACIÓN POR FUNCIONAMIENTO
+                    <div style="font-size: 0.6em; font-weight: normal; margin-top: 5px;">Por Capacidad de Memoria y Conciencia</div>
+                </div>
+
+                <div class="ai-card reactive">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <div>
+                            <div class="card-title">Purely Reactive</div>
+                            <div class="card-subtitle">Puramente Reactiva <span class="status-indicator status-current"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Sin memoria ni experiencias pasadas. Reacciona únicamente a estímulos presentes del entorno.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">💡 Ejemplos:</div>
+                        <div class="example-list">
+                            <span class="example-tag">AlphaGo</span>
+                            <span class="example-tag">Termostato básico</span>
+                            <span class="example-tag">Chatbots simples</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-card limited">
+                    <div class="card-header">
+                        <div class="card-icon">🧮</div>
+                        <div>
+                            <div class="card-title">Limited Memory</div>
+                            <div class="card-subtitle">Memoria Limitada <span class="status-indicator status-current"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Incorpora experiencias pasadas recientes para tomar decisiones más apropiadas y contextualmente relevantes.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">💡 Ejemplos:</div>
+                        <div class="example-list">
+                            <span class="example-tag">Siri</span>
+                            <span class="example-tag">Coches autónomos</span>
+                            <span class="example-tag">Detección de fraude</span>
+                            <span class="example-tag">Algoritmos de redes sociales</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-card theory">
+                    <div class="card-header">
+                        <div class="card-icon">🤝</div>
+                        <div>
+                            <div class="card-title">Theory of Mind</div>
+                            <div class="card-subtitle">Teoría de la Mente <span class="status-indicator status-future"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Comprende pensamientos y emociones. Puede interactuar socialmente y adaptar comportamiento según estados mentales ajenos.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">🔮 Ejemplos:</div>
+                        <div class="example-list">
+                            <span class="example-tag">C-3PO</span>
+                            <span class="example-tag">Terapeutas virtuales</span>
+                            <span class="example-tag">Robots de compañía</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-card aware">
+                    <div class="card-header">
+                        <div class="card-icon">🔮</div>
+                        <div>
+                            <div class="card-title">Self-Aware</div>
+                            <div class="card-subtitle">Autoconsciente <span class="status-indicator status-hypothetical"></span></div>
+                        </div>
+                    </div>
+                    <div class="card-description">
+                        Consciencia de su estado interno, predicción de sentimientos ajenos y capacidad de abstracción e inferencia compleja.
+                    </div>
+                    <div class="examples">
+                        <div class="examples-title">🌟 Ejemplos Hipotéticos:</div>
+                        <div class="example-list">
+                            <span class="example-tag">IA Completamente Consciente</span>
+                            <span class="example-tag">Sistema Filosófico</span>
+                            <span class="example-tag">Entidad Digital Autónoma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Leyenda:</strong> 
+                <span class="status-indicator status-current"></span> Actual | 
+                <span class="status-indicator status-future"></span> Futuro próximo | 
+                <span class="status-indicator status-hypothetical"></span> Hipotético
+            </p>
+            <p style="margin-top: 10px;">Elaborado para el análisis de clasificación de Inteligencia Artificial</p>
+        </div>
+    </div>
+</body>
+</html>
